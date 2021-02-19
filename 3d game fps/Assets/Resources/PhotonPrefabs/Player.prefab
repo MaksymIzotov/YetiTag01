@@ -222,7 +222,7 @@ MonoBehaviour:
   walkingSpeed: 2
   runningSpeed: 3.5
   jumpSpeed: 6
-  wallCimbingDuration: 0
+  wallCimbingDuration: 1
   wallClimbingLayers: 0
   cam: {fileID: 3961429847804295048}
 --- !u!143 &6786397571663607159
