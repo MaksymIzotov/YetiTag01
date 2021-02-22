@@ -8,9 +8,11 @@ public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
     [SerializeField] Transform[] spawnPoints;
+    GameObject menuCam;
 
     void Awake()
     {
+        menuCam = GameObject.Find("MenuCamera");
         GameObject spawnParent = GameObject.Find("SpawnPoints");
         spawnPoints = spawnParent.GetComponentsInChildren<Transform>();
         PV = GetComponent<PhotonView>();
@@ -18,14 +20,15 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        if (PV.IsMine)
-        {
-            CreateController();
-        }
+        //if (PV.IsMine)
+        //{
+        //    CreateController();
+        //}
     }
 
     public void CreateController()
     {
+        menuCam.SetActive(false);
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), spawnPoints[spawnIndex].position, Quaternion.identity);
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,9 +23,9 @@ public class PlayerController : MonoBehaviour
     bool isWalling;
     public float wallCimbingDuration;
     public int wallClimbingLayers;
-    bool wasWalled;
+    float normalizedTime;
+    bool canWall;
 
-    bool isCourutineWorking;
 
     float baseFOV;
     float runFOV;
@@ -42,8 +43,8 @@ public class PlayerController : MonoBehaviour
 
         wallClimbingLayers = 0;
 
-        isCourutineWorking = false;
-        wasWalled = false;
+        normalizedTime = 0;
+        canWall = true;
         baseFOV = 60f;
         runFOV = 80f;
         cc = GetComponent<CharacterController>();
@@ -65,118 +66,92 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
 
         Debug.DrawRay(transform.position, transform.forward * 0.75f, Color.green);
-        
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.75f))
-        {
 
-            // collision detected
+        if (!canWall)
+            canWall = cc.isGrounded;
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.75f))
+        {   
             if (hit.transform.gameObject.layer == wallClimbingLayers)
             {
-                isWalling = Input.GetKey(KeyCode.W) && !cc.isGrounded && !wasWalled;
+                isWalling = Input.GetKey(KeyCode.W) && !cc.isGrounded && canWall;
                 Debug.Log(isWalling);
             }
             else
             {
-                StopCoroutine("WallClimbing");
+                UpdateWallParams(false);
+                isWalling = false;
             }
         }
         else
         {
-            StopCoroutine("WallClimbing");
+            UpdateWallParams(false);
+            isWalling = false;
         }
 
-        if (isWalling && !isCourutineWorking)
-            StartCoroutine("WallClimbing");
-
-        Move(isRunning);
+        if (isWalling)
+            WallClimbing();
+        else
+            Move(isRunning);
 
         ChangeFOV(isRunning);
     }
 
     void Move(bool isRunning)
     {
-        if (!isWalling)
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 right = transform.TransformDirection(Vector3.right);
+        // Press Left Shift to run
+
+        float curSpeedX = Input.GetAxis("Vertical");
+        float curSpeedY = Input.GetAxis("Horizontal");
+        float movementDirectionY = moveDirection.y;
+        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+        moveDirection *= canMove ? (isRunning ? runningSpeed : walkingSpeed) : 0;
+
+        if (Input.GetButton("Jump") && canMove && cc.isGrounded)
         {
-            Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 right = transform.TransformDirection(Vector3.right);
-            // Press Left Shift to run
+            moveDirection.y = jumpSpeed;
+        }
+        else
+        {
+            moveDirection.y = movementDirectionY;
+        }
 
-            float curSpeedX = Input.GetAxis("Vertical");
-            float curSpeedY = Input.GetAxis("Horizontal");
-            float movementDirectionY = moveDirection.y;
-            moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-            moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
-            moveDirection *= canMove ? (isRunning ? runningSpeed : walkingSpeed) : 0;
+        if (!cc.isGrounded)
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
 
-            if (Input.GetButton("Jump") && canMove && cc.isGrounded)
-            {
-                moveDirection.y = jumpSpeed;
-            }
-            else
-            {
-                moveDirection.y = movementDirectionY;
-            }
+        // Move the controller
+        cc.Move(moveDirection * Time.deltaTime);
 
-            if (!cc.isGrounded)
-            {
-                moveDirection.y -= gravity * Time.deltaTime;
-            }
-
-            // Move the controller
-            cc.Move(moveDirection * Time.deltaTime);
-        }    
     }
 
-    public IEnumerator WallClimbing()
+
+    void WallClimbing()
     {
-        isCourutineWorking = true;
-        wasWalled = true;
-        float normalizedTime = 0;
-        while (normalizedTime <= 1f)
+        if (normalizedTime <= wallCimbingDuration)
         {
             //Do climbing
-            cc.Move(new Vector3(0, 0.05f, 0) * Time.deltaTime);
-            normalizedTime += Time.deltaTime / wallCimbingDuration;
-            Debug.Log("Walling");
-            yield return null;
+            cc.Move(new Vector3(0, 0.08f, 0 * Time.deltaTime));
+            normalizedTime += Time.deltaTime;
+            Debug.Log(normalizedTime);
         }
-        isCourutineWorking = false;
-        isWalling = false;
-        Debug.Log("StoppedWall");
-        StartCoroutine("StopWalling");
+        else
+        {
+            UpdateWallParams(false);
+        }
     }
 
-    //void WallClimbing()
-    //{
-    //    if (normalizedTime <= wallCimbingDuration)
-    //    {
-    //        //Do climbing
-    //        cc.Move(new Vector3(0, 0.05f, 0 * Time.deltaTime));
-    //        normalizedTime += Time.deltaTime;
-    //        Debug.Log(normalizedTime);
-    //    }
-    //    else
-    //    {
-    //        wasWalled = true;
-    //        normalizedTime = 0;
-    //        Debug.Log("StoppedWall");
-    //        isWalling = false;
-    //        StartCoroutine("StopWalling");
-    //    }
-    //}
-
-    public IEnumerator StopWalling()
+    void UpdateWallParams(bool check)
     {
-        while (true) {
-            if (cc.isGrounded)
-            {
-                Debug.Log("PIVAS");
-                wasWalled = false;
-                break;
-            }
-            yield return null;
-        }
+        canWall = check;
+        isWalling = false;
+        normalizedTime = 0;
     }
+
 
     void ChangeFOV(bool isRunning)
     {
