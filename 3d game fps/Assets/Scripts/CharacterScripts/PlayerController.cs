@@ -22,8 +22,9 @@ public class PlayerController : MonoBehaviour
     bool isWalling;
     public float wallCimbingDuration;
     public int wallClimbingLayers;
-    float normalizedTime = 0;
     bool wasWalled;
+
+    bool isCourutineWorking;
 
     float baseFOV;
     float runFOV;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
         wallClimbingLayers = 0;
 
+        isCourutineWorking = false;
         wasWalled = false;
         baseFOV = 60f;
         runFOV = 80f;
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
 
         Debug.DrawRay(transform.position, transform.forward * 0.75f, Color.green);
+        
         if (Physics.Raycast(transform.position, transform.forward, out hit, 0.75f))
         {
 
@@ -70,8 +73,6 @@ public class PlayerController : MonoBehaviour
             if (hit.transform.gameObject.layer == wallClimbingLayers)
             {
                 isWalling = Input.GetKey(KeyCode.W) && !cc.isGrounded && !wasWalled;
-                if (isWalling)
-                    normalizedTime = 0;
                 Debug.Log(isWalling);
             }
             else
@@ -79,59 +80,68 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine("WallClimbing");
             }
         }
-
-        if (isWalling)
-            StartCoroutine("WallClimbing");
         else
-            Move(isRunning);
+        {
+            StopCoroutine("WallClimbing");
+        }
+
+        if (isWalling && !isCourutineWorking)
+            StartCoroutine("WallClimbing");
+
+        Move(isRunning);
 
         ChangeFOV(isRunning);
     }
 
     void Move(bool isRunning)
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
-        // Press Left Shift to run
-
-        float curSpeedX = Input.GetAxis("Vertical");
-        float curSpeedY = Input.GetAxis("Horizontal");
-        float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
-        moveDirection *= canMove ? (isRunning ? runningSpeed : walkingSpeed) : 0;
-
-        if (Input.GetButton("Jump") && canMove && cc.isGrounded)
+        if (!isWalling)
         {
-            moveDirection.y = jumpSpeed;
-        }
-        else
-        {
-            moveDirection.y = movementDirectionY;
-        }
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            Vector3 right = transform.TransformDirection(Vector3.right);
+            // Press Left Shift to run
 
-        if (!cc.isGrounded && isWalling)
-        {
-            moveDirection.y -= gravity * Time.deltaTime;
-        }
+            float curSpeedX = Input.GetAxis("Vertical");
+            float curSpeedY = Input.GetAxis("Horizontal");
+            float movementDirectionY = moveDirection.y;
+            moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+            moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+            moveDirection *= canMove ? (isRunning ? runningSpeed : walkingSpeed) : 0;
 
-        // Move the controller
-        cc.Move(moveDirection * Time.deltaTime);
+            if (Input.GetButton("Jump") && canMove && cc.isGrounded)
+            {
+                moveDirection.y = jumpSpeed;
+            }
+            else
+            {
+                moveDirection.y = movementDirectionY;
+            }
+
+            if (!cc.isGrounded)
+            {
+                moveDirection.y -= gravity * Time.deltaTime;
+            }
+
+            // Move the controller
+            cc.Move(moveDirection * Time.deltaTime);
+        }    
     }
 
     public IEnumerator WallClimbing()
     {
+        isCourutineWorking = true;
         wasWalled = true;
-        isWalling = false;
         float normalizedTime = 0;
         while (normalizedTime <= 1f)
         {
             //Do climbing
-            cc.Move(new Vector3(0, 0.05f, 0 * Time.deltaTime));
+            cc.Move(new Vector3(0, 0.05f, 0) * Time.deltaTime);
             normalizedTime += Time.deltaTime / wallCimbingDuration;
             Debug.Log("Walling");
             yield return null;
         }
+        isCourutineWorking = false;
+        isWalling = false;
         Debug.Log("StoppedWall");
         StartCoroutine("StopWalling");
     }
