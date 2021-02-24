@@ -67,3 +67,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints: []
+  PlayerListItemPrefab: {fileID: 3225561427574841487, guid: 840d6c1bcad5a5d41bac3229f44bc0c2,
+    type: 3}

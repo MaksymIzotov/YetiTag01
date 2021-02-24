@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using TMPro;
 using Photon.Realtime;
+using TMPro;
+using System.IO;
 using System.Linq;
 
 public class Launcher : MonoBehaviourPunCallbacks
@@ -58,27 +59,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        MenuManager.Instance.OpenMenu("room");
-        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-
-        Player[] players = PhotonNetwork.PlayerList;
-
-        foreach (Transform child in playerListContent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        for (int i = 0; i < players.Count(); i++)
-        {
-            Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
-        }
-
-        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
-    }
-
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        PhotonNetwork.LoadLevel(1);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -86,17 +67,6 @@ public class Launcher : MonoBehaviourPunCallbacks
         errorText.text = "Room Creation Failed: " + message;
         Debug.LogError("Room Creation Failed: " + message);
         MenuManager.Instance.OpenMenu("error");
-    }
-
-    public void StartGame()
-    {
-        PhotonNetwork.LoadLevel(1);
-    }
-
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
-        MenuManager.Instance.OpenMenu("loading");
     }
 
     public void JoinRoom(RoomInfo info)
@@ -126,10 +96,6 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
-    }
 
     void SetNickname()
     {
