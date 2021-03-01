@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (health <= 0)
             {
-                manager.GetComponent<PlayerManager>().CreateController();
+                //manager.GetComponent<PlayerManager>().CreateController();
 
                 PhotonNetwork.Destroy(gameObject);
             }

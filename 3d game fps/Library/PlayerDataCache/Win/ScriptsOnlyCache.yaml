@@ -40,6 +40,7 @@ ScriptsOnlyBuild:
     - PlayerListItem
     - PlayerManager
     - PlayerShooting
+    - PlayerSpawner
     - RoomListItem
     - RoomManager
     - SuperBasicController
@@ -118,11 +119,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10358}
     - Class: 114
-      Script: {instanceID: 10452}
-    - Class: 114
       Script: {instanceID: 10742}
-    - Class: 114
-      Script: {instanceID: 11324}
     - Class: 114
       Script: {instanceID: 11380}
     - Class: 114
@@ -137,6 +134,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 12646}
     - Class: 114
       Script: {instanceID: 12750}
+    - Class: 114
+      Script: {instanceID: 100110}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -727,12 +726,6 @@ ScriptsOnlyBuild:
     className: SyncCannon
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlayerRPC
-  - hash:
-      serializedVersion: 2
       Hash: 32f6d1d5a09e5c94c633a32edd3e6836
     assemblyName: Unity.ProBuilder.dll
     namespaceName: UnityEngine.ProBuilder
@@ -973,7 +966,7 @@ ScriptsOnlyBuild:
     className: OnClickDestroy
   - hash:
       serializedVersion: 2
-      Hash: 8f46c9a16b22470c3b69c3bfdeffd518
+      Hash: 6153f3125e91ef9cf0afa922be81c647
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerManager
@@ -1457,6 +1450,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 792a1b8fd988af8ae080e8fb9a241c0b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerSpawner
   platform: 5
   scenePathNames:
   - Assets/Scenes 1/MainMenu.unity
