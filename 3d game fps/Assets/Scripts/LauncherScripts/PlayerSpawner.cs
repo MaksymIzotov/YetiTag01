@@ -13,13 +13,18 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] GameObject gameMenu;
     [SerializeField] GameObject menuCam;
     [SerializeField] GameObject yetiText;
-
+    [SerializeField] GameObject pingText;
     int role;
 
     private void Awake()
     {
         GameObject spawnParent = GameObject.Find("SpawnPoints");
         spawnPoints = spawnParent.GetComponentsInChildren<Transform>();
+    }
+
+    private void FixedUpdate()
+    {
+        pingText.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.GetPing().ToString();
     }
 
     [PunRPC]
