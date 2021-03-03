@@ -13,7 +13,6 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] GameObject gameMenu;
     [SerializeField] GameObject menuCam;
     [SerializeField] GameObject yetiText;
-    [SerializeField] GameObject debugText;
 
     int role;
 
@@ -49,7 +48,6 @@ public class PlayerSpawner : MonoBehaviour
         menuCam.SetActive(false);
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), spawnPoints[spawnIndex].position, Quaternion.identity);
-        debugText.GetComponent<TextMeshProUGUI>().text = role.ToString();
     }
 
     [PunRPC]
