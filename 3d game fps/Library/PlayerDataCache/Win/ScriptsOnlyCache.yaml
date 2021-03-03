@@ -113,13 +113,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9764}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10042}
     - Class: 114
-      Script: {instanceID: 10196}
+      Script: {instanceID: 10108}
     - Class: 114
-      Script: {instanceID: 10358}
+      Script: {instanceID: 10198}
+    - Class: 114
+      Script: {instanceID: 10360}
+    - Class: 114
+      Script: {instanceID: 10454}
     - Class: 114
       Script: {instanceID: 10742}
+    - Class: 114
+      Script: {instanceID: 11324}
     - Class: 114
       Script: {instanceID: 11380}
     - Class: 114
@@ -134,8 +140,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 12646}
     - Class: 114
       Script: {instanceID: 12750}
-    - Class: 114
-      Script: {instanceID: 100110}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -204,35 +208,35 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10036}
     - Class: 114
-      Script: {instanceID: 10048}
+      Script: {instanceID: 10050}
     - Class: 114
-      Script: {instanceID: 10052}
+      Script: {instanceID: 10054}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10108}
     - Class: 114
-      Script: {instanceID: 10132}
+      Script: {instanceID: 10134}
     - Class: 114
-      Script: {instanceID: 10150}
+      Script: {instanceID: 10152}
     - Class: 114
-      Script: {instanceID: 10204}
+      Script: {instanceID: 10206}
     - Class: 114
-      Script: {instanceID: 10258}
+      Script: {instanceID: 10260}
     - Class: 114
-      Script: {instanceID: 10284}
+      Script: {instanceID: 10286}
     - Class: 114
-      Script: {instanceID: 10294}
+      Script: {instanceID: 10296}
     - Class: 114
-      Script: {instanceID: 10438}
+      Script: {instanceID: 10440}
     - Class: 114
-      Script: {instanceID: 10452}
+      Script: {instanceID: 10454}
     - Class: 114
-      Script: {instanceID: 10462}
+      Script: {instanceID: 10464}
     - Class: 114
-      Script: {instanceID: 10470}
+      Script: {instanceID: 10472}
     - Class: 114
-      Script: {instanceID: 10490}
+      Script: {instanceID: 10492}
     - Class: 114
-      Script: {instanceID: 10536}
+      Script: {instanceID: 10538}
     - Class: 114
       Script: {instanceID: 10604}
     - Class: 114
@@ -490,6 +494,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: Photon.Pun.Example
     className: TakeOwnership
+  - hash:
+      serializedVersion: 2
+      Hash: 794356e1ee2ed13b12ac835f69933e44
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerSpawner
   - hash:
       serializedVersion: 2
       Hash: 72712369a7c681ad84fc255a5ec0b333
@@ -1450,12 +1460,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 792a1b8fd988af8ae080e8fb9a241c0b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlayerSpawner
   platform: 5
   scenePathNames:
   - Assets/Scenes 1/MainMenu.unity

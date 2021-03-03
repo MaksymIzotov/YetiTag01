@@ -19,6 +19,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     GameObject startGameButton;
     GameObject increaseButton;
     GameObject decreaseButton;
+    GameObject leaveButton;
 
     GameObject playerSpawner;
 
@@ -36,6 +37,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (!PV.IsMine)
             return;
 
+        leaveButton = GameObject.Find("LeaveRoomButton");
         playerSpawner = GameObject.Find("Spawner");
         yetiText = GameObject.Find("NumberYeti");
         yetiAmount = 1;
@@ -48,6 +50,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         startGameButton.GetComponent<Button>().onClick.AddListener(delegate { StartGame(); });
         increaseButton.GetComponent<Button>().onClick.AddListener(delegate { IncreaseAmount(); });
         decreaseButton.GetComponent<Button>().onClick.AddListener(delegate { DecreaseAmount(); });
+        leaveButton.GetComponent<Button>().onClick.AddListener(delegate { LeaveRoom(); });
 
         Player[] players = PhotonNetwork.PlayerList;
 
@@ -68,6 +71,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        if (PhotonNetwork.IsMasterClient)
+            playerSpawner.GetComponent<PlayerSpawner>().GetYeti(yetiAmount);
+
         playerSpawner.GetPhotonView().RPC("SpawnAllPlayers", RpcTarget.All, null);
     }
 
@@ -86,25 +92,53 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             return;
 
         Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
-        playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        if (PhotonNetwork.IsMasterClient)
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
     }
 
     public void LeaveRoom()
     {
+        Destroy(RoomManager.Instance.gameObject);
         PhotonNetwork.LeaveRoom();
-        MenuManager.Instance.OpenMenu("loading");
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        foreach (Transform trans in playerListContent)
+        {
+            Destroy(trans.gameObject);
+        }
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(PhotonNetwork.PlayerList[i]);
+        }
+        if (yetiAmount == PhotonNetwork.PlayerList.Length && PhotonNetwork.IsMasterClient)
+        {
+            if (yetiAmount == 1)
+                return;
+
+            yetiAmount--;
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        }
     }
 
     public void IncreaseAmount()
     {
-        yetiAmount++;
-        playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        if(yetiAmount < PhotonNetwork.PlayerList.Length - 1)
+        {
+            yetiAmount++;
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        }
     }
 
     public void DecreaseAmount()
     {
-        yetiAmount--;
-        playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        if(yetiAmount > 1)
+        {
+            yetiAmount--;
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        }
     }
 
     [PunRPC]

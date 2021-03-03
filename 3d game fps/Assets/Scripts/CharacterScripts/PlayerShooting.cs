@@ -27,6 +27,8 @@ public class PlayerShooting : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
             pv.RPC("SingleShoot", RpcTarget.All);
+
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * 1.5f, Color.red);
     }
 
     [PunRPC]
@@ -36,7 +38,7 @@ public class PlayerShooting : MonoBehaviour
 
         // rayDistance is the look distance, 
         // transform.forward is forward relative to this object's transform
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 999))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 1.5f))
         {
 
             // collision detected
@@ -47,7 +49,7 @@ public class PlayerShooting : MonoBehaviour
             }
             else
             {
-                Debug.Log("UNOOBPLSDONTSHOOT");
+
             }
         }
         else
