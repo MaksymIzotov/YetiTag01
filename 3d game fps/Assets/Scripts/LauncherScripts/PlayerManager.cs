@@ -14,14 +14,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     static public PlayerManager Instance;
 
     PhotonView PV;
-    [SerializeField] Transform[] spawnPoints;
-    GameObject menuCam;
-    GameObject gameMenu;
     [SerializeField] GameObject PlayerListItemPrefab;
     Transform playerListContent;
     GameObject startGameButton;
-    GameObject IncreaseButton;
-    GameObject DecreaseButton;
+    GameObject increaseButton;
+    GameObject decreaseButton;
+    GameObject leaveButton;
+
+    GameObject playerSpawner;
 
     GameObject yetiText;
     int yetiAmount;
@@ -29,26 +29,28 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     void Awake()
     {
         Instance = this;
-
-
-        yetiText = GameObject.Find("NumberYeti");
-        yetiAmount = 1;
-        startGameButton = GameObject.Find("StartGameButton");
-        IncreaseButton = GameObject.Find("IncAmount");
-        DecreaseButton = GameObject.Find("DecAmount");
-        playerListContent = GameObject.Find("PlayersList").transform;
-        menuCam = GameObject.Find("MenuCamera");
-        gameMenu = GameObject.Find("PreGameMenu");
-        GameObject spawnParent = GameObject.Find("SpawnPoints");
-        spawnPoints = spawnParent.GetComponentsInChildren<Transform>();
-        PV = GetComponent<PhotonView>();
     }
 
     void Start()
     {
+        PV = GetComponent<PhotonView>();
+        if (!PV.IsMine)
+            return;
+
+        leaveButton = GameObject.Find("LeaveRoomButton");
+        playerSpawner = GameObject.Find("Spawner");
+        yetiText = GameObject.Find("NumberYeti");
+        yetiAmount = 1;
+        startGameButton = GameObject.Find("StartGameButton");
+        increaseButton = GameObject.Find("IncAmount");
+        decreaseButton = GameObject.Find("DecAmount");
+        playerListContent = GameObject.Find("PlayersList").transform;
+        GameObject spawnParent = GameObject.Find("SpawnPoints");
+
         startGameButton.GetComponent<Button>().onClick.AddListener(delegate { StartGame(); });
-        IncreaseButton.GetComponent<Button>().onClick.AddListener(delegate { IncreaseAmount(); });
-        DecreaseButton.GetComponent<Button>().onClick.AddListener(delegate { DecreaseAmount(); });
+        increaseButton.GetComponent<Button>().onClick.AddListener(delegate { IncreaseAmount(); });
+        decreaseButton.GetComponent<Button>().onClick.AddListener(delegate { DecreaseAmount(); });
+        leaveButton.GetComponent<Button>().onClick.AddListener(delegate { LeaveRoom(); });
 
         Player[] players = PhotonNetwork.PlayerList;
 
@@ -63,66 +65,92 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
 
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        increaseButton.SetActive(PhotonNetwork.IsMasterClient);
+        decreaseButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public void StartGame()
     {
-        Debug.Log("PIVAS");
-        if (PV.IsMine)
-        {
-            CreateController();
-        }
+        if (PhotonNetwork.IsMasterClient)
+            playerSpawner.GetComponent<PlayerSpawner>().GetYeti(yetiAmount);
+
+        playerSpawner.GetPhotonView().RPC("SpawnAllPlayers", RpcTarget.All, null);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        increaseButton.SetActive(PhotonNetwork.IsMasterClient);
+        decreaseButton.SetActive(PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
-        {
-            yetiAmount = int.Parse(yetiText.GetComponent<TextMeshPro>().text);
-
-        }
-
+            yetiAmount = int.Parse(yetiText.GetComponent<TextMeshProUGUI>().text);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        if (!PV.IsMine)
+            return;
+
         Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+        if (PhotonNetwork.IsMasterClient)
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
     }
 
     public void LeaveRoom()
     {
+        Destroy(RoomManager.Instance.gameObject);
         PhotonNetwork.LeaveRoom();
-        MenuManager.Instance.OpenMenu("loading");
+        PhotonNetwork.LoadLevel(0);
     }
 
-    public void CreateController()
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        gameMenu.SetActive(false);
-        menuCam.SetActive(false);
-        int spawnIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), spawnPoints[spawnIndex].position, Quaternion.identity);
+        foreach (Transform trans in playerListContent)
+        {
+            Destroy(trans.gameObject);
+        }
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(PhotonNetwork.PlayerList[i]);
+        }
+        if (yetiAmount == PhotonNetwork.PlayerList.Length && PhotonNetwork.IsMasterClient)
+        {
+            if (yetiAmount == 1)
+                return;
+
+            yetiAmount--;
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        }
     }
 
-    [PunRPC]
     public void IncreaseAmount()
     {
-        yetiAmount++;
-        UpdateYetiText();
-        Instance.photonView.RPC("IncreaseAmount", RpcTarget.All, null);
+        if(yetiAmount < PhotonNetwork.PlayerList.Length - 1)
+        {
+            yetiAmount++;
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        }
+    }
+
+    public void DecreaseAmount()
+    {
+        if(yetiAmount > 1)
+        {
+            yetiAmount--;
+            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+        }
     }
 
     [PunRPC]
-    public void DecreaseAmount()
+    void AssignYeti()
     {
 
-        yetiAmount--;
-        UpdateYetiText();
-        Instance.photonView.RPC("DecreaseAmount", RpcTarget.All, null);
     }
 
-    void UpdateYetiText()
+    [PunRPC]
+    void AssignSci()
     {
-        yetiText.GetComponent<TextMeshPro>().text = yetiAmount.ToString();
+
     }
+
 }

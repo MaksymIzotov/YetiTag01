@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     GameObject manager;
     PhotonView pv;
     int health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (health <= 0)
             {
-                manager.GetComponent<PlayerManager>().CreateController();
+                //manager.GetComponent<PlayerManager>().CreateController();
 
                 PhotonNetwork.Destroy(gameObject);
             }

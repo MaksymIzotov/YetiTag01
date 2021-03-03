@@ -40,6 +40,7 @@ ScriptsOnlyBuild:
     - PlayerListItem
     - PlayerManager
     - PlayerShooting
+    - PlayerSpawner
     - RoomListItem
     - RoomManager
     - SuperBasicController
@@ -112,13 +113,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9764}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10042}
     - Class: 114
-      Script: {instanceID: 10196}
+      Script: {instanceID: 10108}
     - Class: 114
-      Script: {instanceID: 10358}
+      Script: {instanceID: 10198}
     - Class: 114
-      Script: {instanceID: 10452}
+      Script: {instanceID: 10360}
+    - Class: 114
+      Script: {instanceID: 10454}
     - Class: 114
       Script: {instanceID: 10742}
     - Class: 114
@@ -205,35 +208,35 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10036}
     - Class: 114
-      Script: {instanceID: 10048}
+      Script: {instanceID: 10050}
     - Class: 114
-      Script: {instanceID: 10052}
+      Script: {instanceID: 10054}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10108}
     - Class: 114
-      Script: {instanceID: 10132}
+      Script: {instanceID: 10134}
     - Class: 114
-      Script: {instanceID: 10150}
+      Script: {instanceID: 10152}
     - Class: 114
-      Script: {instanceID: 10204}
+      Script: {instanceID: 10206}
     - Class: 114
-      Script: {instanceID: 10258}
+      Script: {instanceID: 10260}
     - Class: 114
-      Script: {instanceID: 10284}
+      Script: {instanceID: 10286}
     - Class: 114
-      Script: {instanceID: 10294}
+      Script: {instanceID: 10296}
     - Class: 114
-      Script: {instanceID: 10438}
+      Script: {instanceID: 10440}
     - Class: 114
-      Script: {instanceID: 10452}
+      Script: {instanceID: 10454}
     - Class: 114
-      Script: {instanceID: 10462}
+      Script: {instanceID: 10464}
     - Class: 114
-      Script: {instanceID: 10470}
+      Script: {instanceID: 10472}
     - Class: 114
-      Script: {instanceID: 10490}
+      Script: {instanceID: 10492}
     - Class: 114
-      Script: {instanceID: 10536}
+      Script: {instanceID: 10538}
     - Class: 114
       Script: {instanceID: 10604}
     - Class: 114
@@ -493,6 +496,12 @@ ScriptsOnlyBuild:
     className: TakeOwnership
   - hash:
       serializedVersion: 2
+      Hash: 794356e1ee2ed13b12ac835f69933e44
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerSpawner
+  - hash:
+      serializedVersion: 2
       Hash: 72712369a7c681ad84fc255a5ec0b333
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -725,12 +734,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: Photon.Pun.Simple
     className: SyncCannon
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlayerRPC
   - hash:
       serializedVersion: 2
       Hash: 32f6d1d5a09e5c94c633a32edd3e6836
@@ -973,7 +976,7 @@ ScriptsOnlyBuild:
     className: OnClickDestroy
   - hash:
       serializedVersion: 2
-      Hash: 8f46c9a16b22470c3b69c3bfdeffd518
+      Hash: 6153f3125e91ef9cf0afa922be81c647
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerManager
