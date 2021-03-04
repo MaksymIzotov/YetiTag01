@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         if (impact.magnitude > 0.2)
             cc.Move(impact * Time.deltaTime);
 
-        impact = Vector3.Lerp(impact, Vector3.zero, 3 * Time.deltaTime);
+        impact = Vector3.Lerp(impact, Vector3.zero, 1f * Time.deltaTime);
     }
 
     private void LateUpdate()
@@ -150,15 +150,14 @@ public class PlayerController : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Trampoline" && !hasJumped)
-            AddImpact(cc.velocity, 50);
+            AddImpact(cc.velocity, 40);
         else
             impact = Vector3.zero;
     }
 
     void AddImpact(Vector3 dir, float force)
     {
-        if (dir.y < 0)
-            dir.y = -dir.y;
+        dir.y = 15;
 
         if (dir.x == 0 && dir.z == 0)
             dir += Vector3.forward;
