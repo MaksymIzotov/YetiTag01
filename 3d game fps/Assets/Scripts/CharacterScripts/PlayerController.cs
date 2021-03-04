@@ -104,15 +104,15 @@ public class PlayerController : MonoBehaviour
         if (impact.magnitude > 0.2)
             cc.Move(impact * Time.deltaTime);
 
-        if (cc.isGrounded)
-            impact = Vector3.zero;
-
         impact = Vector3.Lerp(impact, Vector3.zero, 3 * Time.deltaTime);
     }
 
     private void LateUpdate()
     {
         hasJumped = cc.isGrounded;
+
+        if (cc.isGrounded)
+            impact = Vector3.zero;
     }
 
     void Move(bool isRunning)
@@ -150,10 +150,9 @@ public class PlayerController : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Trampoline" && !hasJumped)
-        {
-            Debug.Log("Adding Impact");
             AddImpact(cc.velocity, 50);
-        }
+        else
+            impact = Vector3.zero;
     }
 
     void AddImpact(Vector3 dir, float force)
