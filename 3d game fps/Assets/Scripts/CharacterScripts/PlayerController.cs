@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     float normalizedTime;
     bool canWall;
 
+    bool hasJumped;
+
+    Vector3 impact = Vector3.zero;
+
 
     float baseFOV;
     float runFOV;
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        hasJumped = false;
         wallClimbingLayers = 0;
 
         normalizedTime = 0;
@@ -95,6 +100,19 @@ public class PlayerController : MonoBehaviour
             Move(isRunning);
 
         ChangeFOV(isRunning);
+
+        if (impact.magnitude > 0.2)
+            cc.Move(impact * Time.deltaTime);
+
+        if (cc.isGrounded)
+            impact = Vector3.zero;
+
+        impact = Vector3.Lerp(impact, Vector3.zero, 3 * Time.deltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        hasJumped = cc.isGrounded;
     }
 
     void Move(bool isRunning)
@@ -109,6 +127,7 @@ public class PlayerController : MonoBehaviour
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
         moveDirection *= canMove ? (isRunning ? runningSpeed : walkingSpeed) : 0;
+
 
         if (Input.GetButton("Jump") && canMove && cc.isGrounded)
         {
@@ -126,7 +145,26 @@ public class PlayerController : MonoBehaviour
 
         // Move the controller
         cc.Move(moveDirection * Time.deltaTime);
+    }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.tag == "Trampoline" && !hasJumped)
+        {
+            Debug.Log("Adding Impact");
+            AddImpact(cc.velocity, 50);
+        }
+    }
+
+    void AddImpact(Vector3 dir, float force)
+    {
+        if (dir.y < 0)
+            dir.y = -dir.y;
+
+        if (dir.x == 0 && dir.z == 0)
+            dir += Vector3.forward;
+
+        impact += dir.normalized * force;
     }
 
 

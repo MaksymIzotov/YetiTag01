@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WeaponHolder
   - Text
+  - Trampoline
   layers:
   - Default
   - TransparentFX
