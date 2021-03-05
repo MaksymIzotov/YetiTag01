@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     bool canWall;
 
     bool hasJumped;
+    bool headHit;
+
+    public bool isFrozen;
 
     Vector3 impact = Vector3.zero;
 
@@ -48,6 +51,8 @@ public class PlayerController : MonoBehaviour
         hasJumped = false;
         wallClimbingLayers = 0;
 
+        isFrozen = false;
+        headHit = false;
         normalizedTime = 0;
         canWall = true;
         baseFOV = 60f;
@@ -63,6 +68,16 @@ public class PlayerController : MonoBehaviour
     {
         if (!PV.IsMine)
             return;
+
+        if (isFrozen)
+        {
+            if (!cc.isGrounded)
+            {
+                moveDirection.y -= gravity * Time.deltaTime;
+                cc.Move(moveDirection * Time.deltaTime);
+            }
+            return;
+        }
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W);
         if (Input.GetKey(KeyCode.S))
@@ -109,10 +124,18 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!PV.IsMine)
+            return;
+
         hasJumped = cc.isGrounded;
 
         if (cc.isGrounded)
             impact = Vector3.zero;
+    }
+
+    public void LoadYetiSettings()
+    {
+        //TODO: change values like speed etc.
     }
 
     void Move(bool isRunning)
@@ -152,7 +175,7 @@ public class PlayerController : MonoBehaviour
         if (hit.gameObject.tag == "Trampoline" && !hasJumped)
             AddImpact(cc.velocity, 40);
         else
-            impact = Vector3.zero;
+            impact = Vector3.zero;       
     }
 
     void AddImpact(Vector3 dir, float force)

@@ -224,6 +224,7 @@ MonoBehaviour:
   jumpSpeed: 6
   wallCimbingDuration: 1
   wallClimbingLayers: 0
+  isFrozen: 0
   cam: {fileID: 3961429847804295048}
 --- !u!143 &6786397571663607159
 CharacterController:
@@ -284,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc180ef4d2fb6c45ab0666aaa1fa853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frozenTime: 15
 --- !u!114 &8334832373309056212
 MonoBehaviour:
   m_ObjectHideFlags: 0

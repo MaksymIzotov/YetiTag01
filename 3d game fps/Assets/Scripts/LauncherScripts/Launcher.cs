@@ -37,7 +37,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to Master");
         PhotonNetwork.JoinLobby();
-        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()

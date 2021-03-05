@@ -11,6 +11,13 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
+    //
+    //
+    //TODO: REWRITE THIS PIECE OF SHIT
+    //
+    //
+
+
     static public PlayerManager Instance;
 
     PhotonView PV;
@@ -82,7 +89,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
         increaseButton.SetActive(PhotonNetwork.IsMasterClient);
         decreaseButton.SetActive(PhotonNetwork.IsMasterClient);
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && !playerSpawner.GetComponent<PlayerSpawner>().isGameStarted)
             yetiAmount = int.Parse(yetiText.GetComponent<TextMeshProUGUI>().text);
     }
 
@@ -105,21 +112,28 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        foreach (Transform trans in playerListContent)
+        if(playerListContent != null)
         {
-            Destroy(trans.gameObject);
-        }
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-        {
-            Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(PhotonNetwork.PlayerList[i]);
-        }
-        if (yetiAmount == PhotonNetwork.PlayerList.Length && PhotonNetwork.IsMasterClient)
-        {
-            if (yetiAmount == 1)
-                return;
+            foreach (Transform trans in playerListContent)
+            {
+                Destroy(trans.gameObject);
+            }
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            {
+                Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(PhotonNetwork.PlayerList[i]);
+            }
+            if (yetiAmount == PhotonNetwork.PlayerList.Length && PhotonNetwork.IsMasterClient)
+            {
+                if (yetiAmount == 1)
+                    return;
 
-            yetiAmount--;
-            playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+                yetiAmount--;
+                playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
+            }
+        }
+        else
+        {
+            PhotonNetwork.DestroyPlayerObjects(otherPlayer);
         }
     }
 

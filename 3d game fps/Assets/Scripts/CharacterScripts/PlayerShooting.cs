@@ -42,14 +42,16 @@ public class PlayerShooting : MonoBehaviour
         {
 
             // collision detected
-            if (hit.collider.tag == "Player")
+            if (hit.collider.gameObject.layer == 9 && gameObject.layer == 10)
             {
-                hit.collider.transform.root.gameObject.GetPhotonView().RPC("TakeDamage", RpcTarget.All, damage, PhotonNetwork.LocalPlayer.ActorNumber);
+                hit.collider.transform.root.gameObject.GetPhotonView().RPC("TakeDamage", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
                 Debug.Log("PLAYERHIT");
             }
-            else
-            {
 
+            if (hit.collider.gameObject.layer == 9 && gameObject.layer == 9)
+            {
+                hit.collider.transform.root.gameObject.GetPhotonView().RPC("Unfreeze", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+                Debug.Log("PLAYERHIT");
             }
         }
         else
@@ -59,8 +61,14 @@ public class PlayerShooting : MonoBehaviour
     }
 
     [PunRPC]
-    private void TakeDamage(int p_damage, int p_actor)
+    private void TakeDamage(int p_actor)
     {
-        GetComponent<PlayerHealth>().TakeDamage(p_damage, p_actor);
+        GetComponent<PlayerHealth>().TakeDamage(p_actor);
+    }
+
+    [PunRPC]
+    private void Unfreeze(int p_actor)
+    {
+        GetComponent<PlayerHealth>().Unfreeze(p_actor);
     }
 }

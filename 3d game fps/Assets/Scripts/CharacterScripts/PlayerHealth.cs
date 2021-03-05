@@ -5,50 +5,54 @@ using Photon.Pun;
 
 public class PlayerHealth : MonoBehaviour
 {
-
-
-    GameObject manager;
     PhotonView pv;
-    int health;
+
+    [SerializeField] float frozenTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = 100;
         pv = GetComponent<PhotonView>();
-        manager = GameObject.Find("PlayerManager(Clone)");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void TakeDamage(int p_damage, int p_actor)
+    public void TakeDamage(int p_actor)
     {
         if (pv.IsMine)
         {
-            health -= p_damage;
-            RefreshHealthBar();
-
-            if (health <= 0)
-            {
-                //manager.GetComponent<PlayerManager>().CreateController();
-
-                PhotonNetwork.Destroy(gameObject);
-            }
-            Debug.Log(health);
+            gameObject.GetComponent<PlayerController>().isFrozen = true;
+            StartCoroutine("Frozen");
         }
     }
 
-    public void Respawn()
+    public void Unfreeze(int p_actor)
     {
-
+        if (pv.IsMine)
+        {
+            gameObject.GetComponent<PlayerController>().isFrozen = false;
+            StopCoroutine("Frozen");
+        }
     }
 
-    void RefreshHealthBar()
+    void BecomeYeti()
     {
-        //TODO: Refresh it
+        //TODO: Respawn as a Yeti
+        gameObject.GetComponent<PlayerController>().isFrozen = false;
+        gameObject.GetComponent<PlayerController>().LoadYetiSettings();
+        gameObject.layer = 10;
+        GameObject.Find("Spawner").GetComponent<PlayerSpawner>().role = 10;
+        GameObject.Find("Spawner").GetComponent<PlayerSpawner>().yetiAmount++;
+        GameObject.Find("Spawner").GetComponent<PlayerSpawner>().UpdateRoleText();
+    }
+
+    public IEnumerator Frozen()
+    {
+        float timer = 0;
+
+        while (timer <= 1)
+        {
+            timer += Time.deltaTime / frozenTime;
+            yield return null;
+        }
+        BecomeYeti();
     }
 }
