@@ -498,7 +498,7 @@ ScriptsOnlyBuild:
     className: TakeOwnership
   - hash:
       serializedVersion: 2
-      Hash: 804c42172917e2d95908be0de632c838
+      Hash: df76f618ce4d3bc240376795caf63e39
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerSpawner

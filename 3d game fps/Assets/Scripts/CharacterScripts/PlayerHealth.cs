@@ -13,6 +13,8 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        if (GameObject.Find("Spawner").GetComponent<PlayerSpawner>().role == 10)
+            gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
     public void TakeDamage(int p_actor)

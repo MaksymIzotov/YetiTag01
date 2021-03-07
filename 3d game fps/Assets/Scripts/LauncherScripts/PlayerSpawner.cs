@@ -70,6 +70,7 @@ public class PlayerSpawner : MonoBehaviour
         UpdateRoleText();
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         player  = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), spawnPoints[spawnIndex].position, Quaternion.identity);
+
         player.layer = role;
     }
 
