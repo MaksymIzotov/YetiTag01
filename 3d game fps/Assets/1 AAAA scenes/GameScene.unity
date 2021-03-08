@@ -2098,10 +2098,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints: []
-  gameMenu: {fileID: 788136505}
+  gameMenu: {fileID: 742521576}
   inGameMenu: {fileID: 788136505}
   menuCam: {fileID: 73388435}
-  yetiText: {fileID: 1720293952}
+  yetiText: {fileID: 837215083}
   pingText: {fileID: 2143815658}
   roleText: {fileID: 1720293952}
   isGameStarted: 0
