@@ -81,10 +81,10 @@ public class PlayerSpawner : MonoBehaviour
 
         gameTime -= Time.deltaTime;
         gameObject.GetPhotonView().RPC("UpdateTimer", RpcTarget.All, gameTime);
-        if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
-        {
-            StopGame();
-        }
+        // if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
+        // {
+        //     StopGame();
+        // }
     }
 
     public void UpdateRoleText() => roleText.GetComponent<TextMeshProUGUI>().text = (role == 10) ? "Yeti" : "Scientist";
