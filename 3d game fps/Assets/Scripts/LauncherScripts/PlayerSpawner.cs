@@ -87,6 +87,12 @@ public class PlayerSpawner : MonoBehaviour
         // }
     }
 
+    [PunRPC]
+    public void AddYeti() => yetiAmount++;
+
+    [PunRPC]
+    public void MinusYeti() => yetiAmount--;
+
     public void UpdateRoleText() => roleText.GetComponent<TextMeshProUGUI>().text = (role == 10) ? "Yeti" : "Scientist";
 
     void StopGame()

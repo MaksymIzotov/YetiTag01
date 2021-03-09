@@ -127,10 +127,12 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
             return;
 
-        hasJumped = cc.isGrounded;
+        if (impact.magnitude < 0.2)
+            hasJumped = cc.isGrounded;
 
         if (cc.isGrounded)
             impact = Vector3.zero;
+
     }
 
     public void LoadYetiSettings()
@@ -153,21 +155,16 @@ public class PlayerController : MonoBehaviour
 
 
         if (Input.GetButton("Jump") && canMove && cc.isGrounded)
-        {
             moveDirection.y = jumpSpeed;
-        }
         else
-        {
             moveDirection.y = movementDirectionY;
-        }
+
 
         if (!cc.isGrounded)
-        {
             moveDirection.y -= gravity * Time.deltaTime;
-        }
 
         // Move the controller
-        cc.Move(moveDirection * Time.deltaTime);
+        cc.Move((moveDirection) * Time.deltaTime);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -175,15 +172,14 @@ public class PlayerController : MonoBehaviour
         if (hit.gameObject.tag == "Trampoline" && !hasJumped)
             AddImpact(cc.velocity, 40);
         else
-            impact = Vector3.zero;       
+            impact = Vector3.zero;
+
     }
 
     void AddImpact(Vector3 dir, float force)
     {
+        moveDirection.y = -6;
         dir.y = 15;
-
-        if (dir.x == 0 && dir.z == 0)
-            dir += Vector3.forward;
 
         impact += dir.normalized * force;
     }
