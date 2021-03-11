@@ -12,9 +12,7 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pv = GetComponent<PhotonView>();
-        if (GameObject.Find("Spawner").GetComponent<PlayerSpawner>().role == 10)
-            gameObject.GetComponent<Renderer>().material.color = Color.red;
+        pv = GetComponent<PhotonView>();       
     }
 
     public void TakeDamage(int p_actor)

@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public bool isFrozen;
 
     Vector3 impact = Vector3.zero;
+    
 
 
     float baseFOV;
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour
         normalizedTime = 0;
         canWall = true;
         baseFOV = 60f;
-        runFOV = 80f;
+        runFOV = 50f;
         cc = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -79,9 +80,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W);
-        if (Input.GetKey(KeyCode.S))
-            isRunning = false;
+        bool IsWalking = Input.GetKey(KeyCode.LeftShift);
 
         RaycastHit hit;
 
@@ -112,14 +111,16 @@ public class PlayerController : MonoBehaviour
         if (isWalling)
             WallClimbing();
         else
-            Move(isRunning);
+            Move(IsWalking);
 
-        ChangeFOV(isRunning);
+        //ChangeFOV(IsWalking);
 
         if (impact.magnitude > 0.2)
             cc.Move(impact * Time.deltaTime);
 
         impact = Vector3.Lerp(impact, Vector3.zero, 1f * Time.deltaTime);
+
+        ChangeFOV(IsWalking);
     }
 
     private void LateUpdate()
@@ -140,7 +141,7 @@ public class PlayerController : MonoBehaviour
         //TODO: change values like speed etc.
     }
 
-    void Move(bool isRunning)
+    void Move(bool IsWalking)
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -151,7 +152,7 @@ public class PlayerController : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
-        moveDirection *= canMove ? (isRunning ? runningSpeed : walkingSpeed) : 0;
+        moveDirection *= canMove ? (IsWalking ? walkingSpeed : runningSpeed) : 0;
 
 
         if (Input.GetButton("Jump") && canMove && cc.isGrounded)
@@ -170,10 +171,13 @@ public class PlayerController : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Trampoline" && !hasJumped)
+        {
             AddImpact(cc.velocity, 40);
+        }
         else
+        {
             impact = Vector3.zero;
-
+        }
     }
 
     void AddImpact(Vector3 dir, float force)
@@ -205,6 +209,11 @@ public class PlayerController : MonoBehaviour
         canWall = check;
         isWalling = false;
         normalizedTime = 0;
+    }
+
+    void ZipLineMove()
+    {
+
     }
 
 

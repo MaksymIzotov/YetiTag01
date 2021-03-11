@@ -103,4 +103,9 @@ public class Launcher : MonoBehaviourPunCallbacks
         else
             PhotonNetwork.NickName = nickNameInputField.text;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
