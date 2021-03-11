@@ -205,6 +205,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -2081846605846831614}
+  - {fileID: 6686829323148334133}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -220,8 +221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d159c6885cbd49846bfc4d954b653ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 4
-  runningSpeed: 5.5
+  walkingSpeed: 5
+  runningSpeed: 8
   jumpSpeed: 6
   wallCimbingDuration: 1
   wallClimbingLayers: 0
