@@ -26,12 +26,11 @@ public class PlayerShooting : MonoBehaviour
             return;
 
         if (Input.GetMouseButtonDown(0))
-            pv.RPC("SingleShoot", RpcTarget.All);
+            SingleShoot();
 
         Debug.DrawRay(cam.transform.position, cam.transform.forward * 1.5f, Color.red);
     }
 
-    [PunRPC]
     void SingleShoot()
     {
         RaycastHit hit;

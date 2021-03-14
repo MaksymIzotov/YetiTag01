@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System;
+using PathCreation;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class PlayerController : MonoBehaviour
     bool hasJumped;
     bool headHit;
 
+    PathCreator pc;
+    float distance = 0;
+
     public bool isFrozen;
 
     Vector3 impact = Vector3.zero;
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        pc = GameObject.Find("Path").GetComponent<PathCreator>();
         hasJumped = false;
         wallClimbingLayers = 0;
 
@@ -69,6 +74,17 @@ public class PlayerController : MonoBehaviour
     {
         if (!PV.IsMine)
             return;
+
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //distance = pc.path.GetClosestDistanceAlongPath(transform.position);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            distance += 5 * Time.deltaTime;
+            PV.transform.position = pc.path.GetPointAtDistance(distance);
+        }
 
         if (isFrozen)
         {
@@ -211,9 +227,10 @@ public class PlayerController : MonoBehaviour
         normalizedTime = 0;
     }
 
-    void ZipLineMove()
+    void ZipLineMove(PathCreator pc, float distance)
     {
-
+        distance += 5 * Time.deltaTime;
+        transform.position = pc.path.GetPointAtDistance(distance);      
     }
 
 

@@ -46,6 +46,8 @@ ScriptsOnlyBuild:
     - RoomManager
     - SuperBasicController
     - emotitron.TestPackObject
+    PathCreator.dll:
+    - PathCreation.PathCreator
     PhotonUnityNetworking.Editor.dll:
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
@@ -118,31 +120,33 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9784}
+      Script: {instanceID: 9794}
     - Class: 114
-      Script: {instanceID: 10062}
+      Script: {instanceID: 10072}
     - Class: 114
-      Script: {instanceID: 10128}
+      Script: {instanceID: 10138}
     - Class: 114
-      Script: {instanceID: 10218}
+      Script: {instanceID: 10228}
     - Class: 114
-      Script: {instanceID: 10380}
+      Script: {instanceID: 10390}
     - Class: 114
-      Script: {instanceID: 10764}
+      Script: {instanceID: 10774}
     - Class: 114
-      Script: {instanceID: 11402}
+      Script: {instanceID: 11412}
     - Class: 114
-      Script: {instanceID: 11562}
+      Script: {instanceID: 11574}
     - Class: 114
-      Script: {instanceID: 11772}
+      Script: {instanceID: 11784}
     - Class: 114
-      Script: {instanceID: 12072}
+      Script: {instanceID: 12084}
     - Class: 114
-      Script: {instanceID: 12164}
+      Script: {instanceID: 12176}
     - Class: 114
-      Script: {instanceID: 12668}
+      Script: {instanceID: 12680}
     - Class: 114
-      Script: {instanceID: 12772}
+      Script: {instanceID: 12784}
+    - Class: 114
+      Script: {instanceID: 52420}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -201,129 +205,129 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9784}
+      Script: {instanceID: 9794}
     - Class: 114
-      Script: {instanceID: 9798}
+      Script: {instanceID: 9808}
     - Class: 114
-      Script: {instanceID: 9804}
+      Script: {instanceID: 9814}
     - Class: 114
-      Script: {instanceID: 10000}
+      Script: {instanceID: 10010}
     - Class: 114
-      Script: {instanceID: 10056}
+      Script: {instanceID: 10066}
     - Class: 114
-      Script: {instanceID: 10070}
+      Script: {instanceID: 10080}
     - Class: 114
-      Script: {instanceID: 10074}
+      Script: {instanceID: 10084}
     - Class: 114
-      Script: {instanceID: 10128}
+      Script: {instanceID: 10138}
     - Class: 114
-      Script: {instanceID: 10154}
+      Script: {instanceID: 10164}
     - Class: 114
-      Script: {instanceID: 10172}
+      Script: {instanceID: 10182}
     - Class: 114
-      Script: {instanceID: 10226}
+      Script: {instanceID: 10236}
     - Class: 114
-      Script: {instanceID: 10280}
-    - Class: 114
-      Script: {instanceID: 10306}
+      Script: {instanceID: 10290}
     - Class: 114
       Script: {instanceID: 10316}
     - Class: 114
-      Script: {instanceID: 10460}
+      Script: {instanceID: 10326}
     - Class: 114
-      Script: {instanceID: 10474}
+      Script: {instanceID: 10470}
     - Class: 114
       Script: {instanceID: 10484}
     - Class: 114
-      Script: {instanceID: 10492}
+      Script: {instanceID: 10494}
     - Class: 114
-      Script: {instanceID: 10512}
+      Script: {instanceID: 10502}
     - Class: 114
-      Script: {instanceID: 10558}
+      Script: {instanceID: 10522}
     - Class: 114
-      Script: {instanceID: 10626}
+      Script: {instanceID: 10568}
     - Class: 114
-      Script: {instanceID: 10674}
+      Script: {instanceID: 10636}
     - Class: 114
-      Script: {instanceID: 10720}
+      Script: {instanceID: 10684}
     - Class: 114
-      Script: {instanceID: 10756}
+      Script: {instanceID: 10730}
     - Class: 114
-      Script: {instanceID: 10764}
+      Script: {instanceID: 10766}
     - Class: 114
-      Script: {instanceID: 10812}
+      Script: {instanceID: 10774}
     - Class: 114
-      Script: {instanceID: 10840}
+      Script: {instanceID: 10822}
     - Class: 114
-      Script: {instanceID: 10892}
+      Script: {instanceID: 10850}
     - Class: 114
-      Script: {instanceID: 11130}
+      Script: {instanceID: 10902}
     - Class: 114
-      Script: {instanceID: 11238}
+      Script: {instanceID: 11140}
     - Class: 114
-      Script: {instanceID: 11260}
+      Script: {instanceID: 11248}
     - Class: 114
-      Script: {instanceID: 11346}
+      Script: {instanceID: 11270}
     - Class: 114
-      Script: {instanceID: 11386}
+      Script: {instanceID: 11356}
     - Class: 114
-      Script: {instanceID: 11402}
+      Script: {instanceID: 11396}
     - Class: 114
-      Script: {instanceID: 11420}
+      Script: {instanceID: 11412}
     - Class: 114
-      Script: {instanceID: 11472}
+      Script: {instanceID: 11430}
     - Class: 114
-      Script: {instanceID: 11550}
+      Script: {instanceID: 11458}
+    - Class: 114
+      Script: {instanceID: 11484}
     - Class: 114
       Script: {instanceID: 11562}
     - Class: 114
-      Script: {instanceID: 11630}
+      Script: {instanceID: 11574}
     - Class: 114
-      Script: {instanceID: 11662}
+      Script: {instanceID: 11642}
     - Class: 114
-      Script: {instanceID: 11772}
+      Script: {instanceID: 11674}
     - Class: 114
-      Script: {instanceID: 11790}
+      Script: {instanceID: 11784}
     - Class: 114
-      Script: {instanceID: 11878}
+      Script: {instanceID: 11802}
     - Class: 114
-      Script: {instanceID: 11944}
+      Script: {instanceID: 11890}
     - Class: 114
-      Script: {instanceID: 12072}
+      Script: {instanceID: 11956}
     - Class: 114
-      Script: {instanceID: 12122}
+      Script: {instanceID: 12084}
     - Class: 114
-      Script: {instanceID: 12164}
+      Script: {instanceID: 12134}
     - Class: 114
-      Script: {instanceID: 12438}
+      Script: {instanceID: 12176}
     - Class: 114
-      Script: {instanceID: 12454}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 12548}
+      Script: {instanceID: 12466}
     - Class: 114
-      Script: {instanceID: 12550}
+      Script: {instanceID: 12560}
     - Class: 114
-      Script: {instanceID: 12608}
+      Script: {instanceID: 12562}
     - Class: 114
-      Script: {instanceID: 12668}
+      Script: {instanceID: 12620}
     - Class: 114
-      Script: {instanceID: 12682}
+      Script: {instanceID: 12680}
     - Class: 114
-      Script: {instanceID: 12772}
+      Script: {instanceID: 12694}
     - Class: 114
-      Script: {instanceID: 12796}
+      Script: {instanceID: 12784}
     - Class: 114
-      Script: {instanceID: 12804}
+      Script: {instanceID: 12808}
     - Class: 114
-      Script: {instanceID: 12854}
+      Script: {instanceID: 12816}
     - Class: 114
-      Script: {instanceID: 12874}
+      Script: {instanceID: 12866}
     - Class: 114
-      Script: {instanceID: 13188}
+      Script: {instanceID: 12886}
     - Class: 114
-      Script: {instanceID: 13750}
+      Script: {instanceID: 13200}
     - Class: 114
-      Script: {instanceID: 13834}
+      Script: {instanceID: 13762}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1017,6 +1021,12 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterColorChange
+  - hash:
+      serializedVersion: 2
       Hash: 23d98efc145b1081fdecd8f309db521f
     assemblyName: PhotonUnityNetworking.dll
     namespaceName: Photon.Pun
@@ -1467,12 +1477,48 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 14285c3bd5db9ec1880c467fd290624a
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CharacterColorChange
+    namespaceName: PathCreation.Examples
+    className: PathSpawner
+  - hash:
+      serializedVersion: 2
+      Hash: 0eaba8fcbfa6859be3e02bfe60166ccf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PathCreation.Examples
+    className: PathPlacer
+  - hash:
+      serializedVersion: 2
+      Hash: b233df5c6f9cea11b87e4e515556b495
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PathCreation.Examples
+    className: GeneratePathExample
+  - hash:
+      serializedVersion: 2
+      Hash: bfd0fa381ea0fbb32773b78e2b1e2c06
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PathCreation.Examples
+    className: RoadMeshCreator
+  - hash:
+      serializedVersion: 2
+      Hash: 1532436743ef194dbf67c97ed7b8e9f1
+    assemblyName: PathCreator.dll
+    namespaceName: PathCreation
+    className: GlobalDisplaySettings
+  - hash:
+      serializedVersion: 2
+      Hash: 2023515a447b9089d205e8fe2ea2e7ac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PathCreation.Examples
+    className: PathFollower
+  - hash:
+      serializedVersion: 2
+      Hash: 5455126194c7fb60e2136719105446c8
+    assemblyName: PathCreator.dll
+    namespaceName: PathCreation
+    className: PathCreator
   platform: 5
   scenePathNames:
   - Assets/1 Scenes/MainMenu.unity
   - Assets/1 Scenes/GameScene.unity
-  playerPath: C:/Users/fukin/Desktop/3d game fps.exe
+  playerPath: C:/Users/Max Kaizer/Desktop/3d fps online/3d game fps.exe
