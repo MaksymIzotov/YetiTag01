@@ -46,6 +46,7 @@ ScriptsOnlyBuild:
     - RoomListItem
     - RoomManager
     - SuperBasicController
+    - ZipLineColor
     - emotitron.TestPackObject
     PathCreator.dll:
     - PathCreation.PathCreator
@@ -145,11 +146,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12096}
     - Class: 114
-      Script: {instanceID: 12190}
+      Script: {instanceID: 12164}
     - Class: 114
-      Script: {instanceID: 12696}
+      Script: {instanceID: 12192}
     - Class: 114
-      Script: {instanceID: 12800}
+      Script: {instanceID: 12698}
+    - Class: 114
+      Script: {instanceID: 12802}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -304,35 +307,35 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12146}
     - Class: 114
-      Script: {instanceID: 12190}
+      Script: {instanceID: 12192}
     - Class: 114
-      Script: {instanceID: 12466}
+      Script: {instanceID: 12468}
     - Class: 114
-      Script: {instanceID: 12482}
-    - Class: 114
-      Script: {instanceID: 12576}
+      Script: {instanceID: 12484}
     - Class: 114
       Script: {instanceID: 12578}
     - Class: 114
-      Script: {instanceID: 12636}
+      Script: {instanceID: 12580}
     - Class: 114
-      Script: {instanceID: 12696}
+      Script: {instanceID: 12638}
     - Class: 114
-      Script: {instanceID: 12710}
+      Script: {instanceID: 12698}
     - Class: 114
-      Script: {instanceID: 12800}
+      Script: {instanceID: 12712}
     - Class: 114
-      Script: {instanceID: 12826}
+      Script: {instanceID: 12802}
     - Class: 114
-      Script: {instanceID: 12834}
+      Script: {instanceID: 12828}
     - Class: 114
-      Script: {instanceID: 12884}
+      Script: {instanceID: 12836}
     - Class: 114
-      Script: {instanceID: 12904}
+      Script: {instanceID: 12886}
     - Class: 114
-      Script: {instanceID: 13218}
+      Script: {instanceID: 12906}
     - Class: 114
-      Script: {instanceID: 13780}
+      Script: {instanceID: 13220}
+    - Class: 114
+      Script: {instanceID: 13782}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1252,6 +1255,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: Photon.Pun.Simple
     className: Mount
+  - hash:
+      serializedVersion: 2
+      Hash: 825acdfa883aa9a3cd00dce2fdb810e2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ZipLineColor
   - hash:
       serializedVersion: 2
       Hash: f336e086360abe49a3323e5f1583c35a

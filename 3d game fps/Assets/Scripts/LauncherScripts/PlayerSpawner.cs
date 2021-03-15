@@ -81,17 +81,19 @@ public class PlayerSpawner : MonoBehaviour
 
         gameTime -= Time.deltaTime;
         gameObject.GetPhotonView().RPC("UpdateTimer", RpcTarget.All, gameTime);
-        // if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
-        // {
-        //     StopGame();
-        // }
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject n in players)
+        {
+            if (n.layer == 10 || n.layer == 12)
+                yetiAmount++;
+        }
+
+        if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
+        {
+            StopGame();
+        }
+        yetiAmount = 0;
     }
-
-    [PunRPC]
-    public void AddYeti() => yetiAmount++;
-
-    [PunRPC]
-    public void MinusYeti() => yetiAmount--;
 
     public void UpdateRoleText() => roleText.GetComponent<TextMeshProUGUI>().text = (role == 10) ? "Yeti" : "Scientist";
 

@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     float movementSpeed = 1;
     bool canMove = true;
     Vector3 moveDirection = Vector3.zero;
-    public float walkingSpeed = 2f;
-    public float runningSpeed = 3.5f;
+    public float walkingSpeed = 0;
+    public float runningSpeed = 0;
     public float jumpSpeed = 8;
 
     bool isWalling;
@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
         }
 
         UpdateHnds();
+        if (gameObject.layer == 10)
+            runningSpeed = 9;
 
         isZippin = false;
         hasJumped = false;
@@ -218,6 +220,7 @@ public class PlayerController : MonoBehaviour
     {
         //TODO: change values like speed etc.
         UpdateHnds();
+        runningSpeed = 9;
     }
 
     void Move(bool IsWalking)

@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            GameObject.Find("Spawner").GetPhotonView().RPC("AddYeti", RpcTarget.MasterClient, null);
+            gameObject.layer = 12;
             gameObject.GetComponent<PlayerController>().isFrozen = true;
             StartCoroutine("Frozen");
         }
@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            GameObject.Find("Spawner").GetPhotonView().RPC("MinusYeti", RpcTarget.MasterClient, null);
+            gameObject.layer = 9;
             gameObject.GetComponent<PlayerController>().isFrozen = false;
             StopCoroutine("Frozen");
         }

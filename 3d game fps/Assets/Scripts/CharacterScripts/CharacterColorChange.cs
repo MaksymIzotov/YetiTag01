@@ -6,6 +6,7 @@ using Photon.Pun;
 public class CharacterColorChange : MonoBehaviour, IPunObservable
 {
     int role = 0;
+    int layer;
 
     bool valuesReceived = false;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -14,11 +15,13 @@ public class CharacterColorChange : MonoBehaviour, IPunObservable
         {
             //We own this player: send the others our data
             stream.SendNext(GameObject.Find("Spawner").GetComponent<PlayerSpawner>().role);
+            stream.SendNext(gameObject.layer);
         }
         else
         {
             //Network player, receive data
             role = (int)stream.ReceiveNext();
+            layer = (int)stream.ReceiveNext();
 
             valuesReceived = true;
 
@@ -44,12 +47,19 @@ public class CharacterColorChange : MonoBehaviour, IPunObservable
         
     }
     void ChangeColor()
-    {       
+    {
         if (!GetComponent<PhotonView>().IsMine && valuesReceived)
-            if (role == 10)
+        {
+            if(role == 10)
             {
                 gameObject.GetComponent<Renderer>().material.color = Color.red;
                 gameObject.layer = role;
             }
+            if(layer == 12)
+            {
+                gameObject.layer = layer;
+                gameObject.GetComponent<Renderer>().material.color = Color.blue;
+            }
+        }
     }
 }

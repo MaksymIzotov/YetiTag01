@@ -47,7 +47,7 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("PLAYERHIT");
             }
 
-            if (hit.collider.gameObject.layer == 9 && gameObject.layer == 9)
+            if (hit.collider.gameObject.layer == 12 && gameObject.layer == 9)
             {
                 hit.collider.transform.root.gameObject.GetPhotonView().RPC("Unfreeze", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
                 Debug.Log("PLAYERHIT");
