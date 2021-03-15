@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
 
     PhotonView PV;
 
-    public bool isZipLineClose;
-
     CharacterController cc;
     private float velocity;
     private float gravity = 18.9f;
@@ -69,7 +67,6 @@ public class PlayerController : MonoBehaviour
 
         UpdateHnds();
 
-        isZipLineClose = false;
         isZippin = false;
         hasJumped = false;
         wallClimbingLayers = 0;
@@ -155,12 +152,10 @@ public class PlayerController : MonoBehaviour
             {
                 pc = n.gameObject.GetComponent<PathCreator>();
                 n.gameObject.GetComponent<Renderer>().material.color = Color.green;
-                Debug.Log("FoundZipLine");
                 n.gameObject.GetComponent<ZipLineColor>().isGreen = true;
                 break;
             }
             pc = null;
-            isZipLineClose = false;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {

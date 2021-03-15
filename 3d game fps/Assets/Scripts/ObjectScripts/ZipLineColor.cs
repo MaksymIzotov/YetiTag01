@@ -13,7 +13,7 @@ public class ZipLineColor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (!isGreen)
             gameObject.GetComponent<Renderer>().material.color = Color.white;

@@ -4506,6 +4506,7 @@ GameObject:
   - component: {fileID: 481830926}
   - component: {fileID: 481830925}
   - component: {fileID: 481830924}
+  - component: {fileID: 481830928}
   m_Layer: 11
   m_Name: Zipline02 (1)
   m_TagString: Untagged
@@ -4559,7 +4560,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 43.2
     vertexPathMinVertexSpacing: 0
     showTransformTool: 1
@@ -4639,6 +4640,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481830922}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &481830928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481830922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1330d52cb3d81c142a3970dd5436d262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGreen: 0
 --- !u!1 &484908500
 GameObject:
   m_ObjectHideFlags: 0
@@ -8359,6 +8373,7 @@ GameObject:
   - component: {fileID: 800631410}
   - component: {fileID: 800631409}
   - component: {fileID: 800631413}
+  - component: {fileID: 800631414}
   m_Layer: 11
   m_Name: Zipline02
   m_TagString: Untagged
@@ -8471,7 +8486,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 43.2
     vertexPathMinVertexSpacing: 0
     showTransformTool: 1
@@ -8492,6 +8507,19 @@ MonoBehaviour:
     showNormalsHelpInfo: 0
     tabIndex: 0
   initialized: 1
+--- !u!114 &800631414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800631408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1330d52cb3d81c142a3970dd5436d262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGreen: 0
 --- !u!1 &804622226
 GameObject:
   m_ObjectHideFlags: 0
@@ -15615,6 +15643,7 @@ GameObject:
   - component: {fileID: 1477386308}
   - component: {fileID: 1477386307}
   - component: {fileID: 1477386310}
+  - component: {fileID: 1477386311}
   m_Layer: 11
   m_Name: ZipLine01
   m_TagString: Untagged
@@ -15748,6 +15777,19 @@ MonoBehaviour:
     showNormalsHelpInfo: 0
     tabIndex: 0
   initialized: 1
+--- !u!114 &1477386311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477386305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1330d52cb3d81c142a3970dd5436d262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGreen: 0
 --- !u!1 &1482811345
 GameObject:
   m_ObjectHideFlags: 0
