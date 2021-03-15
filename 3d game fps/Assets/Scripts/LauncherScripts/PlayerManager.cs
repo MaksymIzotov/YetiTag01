@@ -154,17 +154,4 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             playerSpawner.GetPhotonView().RPC("UpdateYetiText", RpcTarget.All, yetiAmount);
         }
     }
-
-    [PunRPC]
-    void AssignYeti()
-    {
-
-    }
-
-    [PunRPC]
-    void AssignSci()
-    {
-
-    }
-
 }

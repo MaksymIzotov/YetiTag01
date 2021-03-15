@@ -21,7 +21,11 @@ public class CharacterColorChange : MonoBehaviour, IPunObservable
             role = (int)stream.ReceiveNext();
 
             valuesReceived = true;
-            ChangeColor();
+            if(gameObject.layer != role)
+            {
+                GetComponent<PlayerController>().UpdateHnds();
+                ChangeColor();
+            }
         }
     }
 

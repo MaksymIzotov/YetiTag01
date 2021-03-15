@@ -27,11 +27,17 @@ public class PlayerController : MonoBehaviour
     float normalizedTime;
     bool canWall;
 
+
     bool hasJumped;
     bool headHit;
 
+    [SerializeField] GameObject handYeti;
+    [SerializeField] GameObject handHuman;
+
     PathCreator pc;
     float distance = 0;
+    bool isZippin;
+    bool justZipped;
 
     public bool isFrozen;
 
@@ -43,6 +49,9 @@ public class PlayerController : MonoBehaviour
     float runFOV;
 
     public Camera cam;
+    public Camera handCam;
+
+    bool isForward;
 
     void Start()
     {
@@ -50,13 +59,18 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
         {
             Destroy(cam.gameObject);
+            Destroy(handCam.gameObject);
+            handHuman.layer = 0;
+            handYeti.layer = 0;
             return;
         }
 
-        pc = GameObject.Find("Path").GetComponent<PathCreator>();
+
+        isZippin = false;
         hasJumped = false;
         wallClimbingLayers = 0;
 
+        justZipped = false;
         isFrozen = false;
         headHit = false;
         normalizedTime = 0;
@@ -66,7 +80,6 @@ public class PlayerController : MonoBehaviour
         cc = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
     // Update is called once per frame
@@ -75,16 +88,9 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
             return;
 
-        
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //distance = pc.path.GetClosestDistanceAlongPath(transform.position);
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            distance += 5 * Time.deltaTime;
-            PV.transform.position = pc.path.GetPointAtDistance(distance);
-        }
+
+        if (justZipped)
+            justZipped = !cc.isGrounded;
 
         if (isFrozen)
         {
@@ -106,7 +112,7 @@ public class PlayerController : MonoBehaviour
             canWall = cc.isGrounded;
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 0.75f))
-        {   
+        {
             if (hit.transform.gameObject.layer == wallClimbingLayers)
             {
                 isWalling = Input.GetKey(KeyCode.W) && !cc.isGrounded && canWall;
@@ -126,15 +132,66 @@ public class PlayerController : MonoBehaviour
 
         if (isWalling)
             WallClimbing();
-        else
-            Move(IsWalking);
-
-        //ChangeFOV(IsWalking);
+        if (!isWalling)
+            if (!isZippin)
+                Move(IsWalking);
 
         if (impact.magnitude > 0.2)
             cc.Move(impact * Time.deltaTime);
 
         impact = Vector3.Lerp(impact, Vector3.zero, 1f * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!isZippin)
+            {
+                Collider[] objects;
+                objects = Physics.OverlapSphere(cam.transform.position, 3);
+                foreach (Collider n in objects)
+                {
+                    if (n.gameObject.layer == 11)
+                    {
+                        pc = n.gameObject.GetComponent<PathCreator>();
+                        Debug.Log("FoundZipLine");
+                        break;
+                    }
+                    pc = null;
+                }
+                if (pc != null)
+                {
+                    distance = pc.path.GetClosestDistanceAlongPath(transform.position);
+                    if (justZipped)
+                    {
+                        isForward = !isForward;
+                    }
+                    else
+                    {
+                        if (distance < pc.path.length / 2)
+                            isForward = true;
+                        else
+                            isForward = false;
+                    }
+
+                    isZippin = true;
+                    if (impact.magnitude > 0.2)
+                        impact = Vector3.zero;
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isZippin)
+            {
+                justZipped = true;
+                isZippin = false;
+                moveDirection.y = 5;
+            }
+        }
+
+        if (isZippin)
+        {
+            ZipLineMove();
+        }
 
         ChangeFOV(IsWalking);
     }
@@ -155,6 +212,7 @@ public class PlayerController : MonoBehaviour
     public void LoadYetiSettings()
     {
         //TODO: change values like speed etc.
+        UpdateHnds();
     }
 
     void Move(bool IsWalking)
@@ -227,10 +285,20 @@ public class PlayerController : MonoBehaviour
         normalizedTime = 0;
     }
 
-    void ZipLineMove(PathCreator pc, float distance)
+    void ZipLineMove()
     {
-        distance += 5 * Time.deltaTime;
-        transform.position = pc.path.GetPointAtDistance(distance);      
+        transform.position = pc.path.GetPointAtDistance(distance);
+
+        if (isForward)
+            distance += 0.3f * Time.deltaTime;
+        else
+            distance -= 0.3f * Time.deltaTime;
+        
+        if(distance >= pc.path.length || distance <= 0)
+        {
+            isZippin = false;
+            moveDirection.y = 5;
+        }
     }
 
 
@@ -240,5 +308,15 @@ public class PlayerController : MonoBehaviour
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, runFOV, Time.deltaTime * 8f);
         else
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, baseFOV, Time.deltaTime * 8f);
+    }
+
+    public void UpdateHnds()
+    {
+        handYeti.SetActive(false);
+        handHuman.SetActive(false);
+        if (gameObject.layer == 10)
+            handYeti.SetActive(true);
+        else
+            handHuman.SetActive(true);
     }
 }

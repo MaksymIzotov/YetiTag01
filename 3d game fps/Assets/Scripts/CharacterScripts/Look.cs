@@ -9,6 +9,8 @@ public class Look : MonoBehaviour
 
     public Transform player;
     public Transform normalCam;
+    public Transform handCam;
+    public Transform rotator;
 
     public float xSensitivity;
     public float ySensitivity;
@@ -44,6 +46,8 @@ public class Look : MonoBehaviour
         if (Quaternion.Angle(camCenter, t_delta) < maxAngle)
         {
             normalCam.localRotation = t_delta;
+            handCam.localRotation = t_delta;
+            rotator.localRotation = t_delta;
         }
 
     }
