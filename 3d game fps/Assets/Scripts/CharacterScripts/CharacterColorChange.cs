@@ -21,11 +21,14 @@ public class CharacterColorChange : MonoBehaviour, IPunObservable
             role = (int)stream.ReceiveNext();
 
             valuesReceived = true;
-            if(gameObject.layer != role)
-            {
+
+            //Tak suka dont forget to pofixit' eto pusho fps tada gabella
+
+            //if(gameObject.layer != role)
+            //{
                 GetComponent<PlayerController>().UpdateHnds();
                 ChangeColor();
-            }
+            //}
         }
     }
 

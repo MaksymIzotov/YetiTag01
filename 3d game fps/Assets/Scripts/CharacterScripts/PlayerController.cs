@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     PhotonView PV;
 
+    public bool isZipLineClose;
+
     CharacterController cc;
     private float velocity;
     private float gravity = 18.9f;
@@ -60,12 +62,14 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(cam.gameObject);
             Destroy(handCam.gameObject);
-            handHuman.layer = 0;
-            handYeti.layer = 0;
+            MoveToLayer(handHuman.transform,0);
+            MoveToLayer(handYeti.transform, 0);
             return;
         }
 
+        UpdateHnds();
 
+        isZipLineClose = false;
         isZippin = false;
         hasJumped = false;
         wallClimbingLayers = 0;
@@ -141,22 +145,28 @@ public class PlayerController : MonoBehaviour
 
         impact = Vector3.Lerp(impact, Vector3.zero, 1f * Time.deltaTime);
 
+        //ZIPLINE BELOW
+
+        Collider[] objects;
+        objects = Physics.OverlapSphere(cam.transform.position, 3);
+        foreach (Collider n in objects)
+        {
+            if (n.gameObject.layer == 11)
+            {
+                pc = n.gameObject.GetComponent<PathCreator>();
+                n.gameObject.GetComponent<Renderer>().material.color = Color.green;
+                Debug.Log("FoundZipLine");
+                n.gameObject.GetComponent<ZipLineColor>().isGreen = true;
+                break;
+            }
+            pc = null;
+            isZipLineClose = false;
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!isZippin)
             {
-                Collider[] objects;
-                objects = Physics.OverlapSphere(cam.transform.position, 3);
-                foreach (Collider n in objects)
-                {
-                    if (n.gameObject.layer == 11)
-                    {
-                        pc = n.gameObject.GetComponent<PathCreator>();
-                        Debug.Log("FoundZipLine");
-                        break;
-                    }
-                    pc = null;
-                }
+                
                 if (pc != null)
                 {
                     distance = pc.path.GetClosestDistanceAlongPath(transform.position);
@@ -287,6 +297,8 @@ public class PlayerController : MonoBehaviour
 
     void ZipLineMove()
     {
+        Debug.Log(pc.path.length);
+
         transform.position = pc.path.GetPointAtDistance(distance);
 
         if (isForward)
@@ -318,5 +330,12 @@ public class PlayerController : MonoBehaviour
             handYeti.SetActive(true);
         else
             handHuman.SetActive(true);
+    }
+
+    void MoveToLayer(Transform root, int layer)
+    {
+        root.gameObject.layer = layer;
+        foreach (Transform child in root)
+            MoveToLayer(child, layer);
     }
 }

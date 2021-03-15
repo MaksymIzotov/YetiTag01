@@ -28,7 +28,7 @@ public class PlayerShooting : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
             SingleShoot();
 
-        Debug.DrawRay(cam.transform.position, cam.transform.forward * 1.5f, Color.red);
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * 2.5f, Color.red);
     }
 
     void SingleShoot()
@@ -37,7 +37,7 @@ public class PlayerShooting : MonoBehaviour
 
         // rayDistance is the look distance, 
         // transform.forward is forward relative to this object's transform
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 1.5f))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2.5f))
         {
 
             // collision detected
