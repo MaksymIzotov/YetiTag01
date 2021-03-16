@@ -88,10 +88,10 @@ public class PlayerSpawner : MonoBehaviour
                 yetiAmount++;
         }
 
-        if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
-        {
-            StopGame();
-        }
+        // if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
+        // {
+        //     StopGame();
+        // }
         yetiAmount = 0;
     }
 
