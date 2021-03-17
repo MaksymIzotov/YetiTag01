@@ -12,8 +12,8 @@ public class Look : MonoBehaviour
     public Transform handCam;
     public Transform rotator;
 
-    public float xSensitivity;
-    public float ySensitivity;
+    public float sensitivity;
+    float sensMultiplier;
     public float maxAngle;
 
     PhotonView pv;
@@ -22,24 +22,23 @@ public class Look : MonoBehaviour
 
     void Start()
     {
+        sensMultiplier = 10;
         camCenter = normalCam.localRotation; //set rotation origin for cameras to camCenter
         pv = GetComponent<PhotonView>();
     }
 
     void Update()
     {
-        if (!pv.IsMine) return;
+        if (!pv.IsMine || GameObject.Find("Spawner").GetComponent<PlayerSpawner>().isPaused) return;
 
         SetY();
         SetX();
-
-        UpdateCursorLock();
 
     }
 
     void SetY()
     {
-        float t_input = Input.GetAxis("Mouse Y") * ySensitivity * Time.deltaTime;
+        float t_input = Input.GetAxis("Mouse Y") * sensitivity * sensMultiplier * Time.deltaTime;
         Quaternion t_adj = Quaternion.AngleAxis(t_input, -Vector3.right);
         Quaternion t_delta = normalCam.localRotation * t_adj;
 
@@ -54,33 +53,10 @@ public class Look : MonoBehaviour
 
     void SetX()
     {
-        float t_input = Input.GetAxis("Mouse X") * xSensitivity * Time.deltaTime;
+        float t_input = Input.GetAxis("Mouse X") * sensitivity * sensMultiplier * Time.deltaTime;
         Quaternion t_adj = Quaternion.AngleAxis(t_input, Vector3.up);
         Quaternion t_delta = player.localRotation * t_adj;
         player.localRotation = t_delta;
     }
 
-    void UpdateCursorLock()
-    {
-        if (cursorLocked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                cursorLocked = false;
-            }
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                cursorLocked = true;
-            }
-        }
-    }
 }

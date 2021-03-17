@@ -79,7 +79,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         if (PhotonNetwork.IsMasterClient)
-            playerSpawner.GetComponent<PlayerSpawner>().GetYeti(yetiAmount);
+            playerSpawner.GetComponent<PlayerSpawner>().GetYeti();
 
         playerSpawner.GetPhotonView().RPC("SpawnAllPlayers", RpcTarget.All, null);
     }

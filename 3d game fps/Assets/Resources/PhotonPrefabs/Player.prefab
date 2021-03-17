@@ -415,8 +415,7 @@ MonoBehaviour:
   normalCam: {fileID: 3784918270071293378}
   handCam: {fileID: 7532750016437657965}
   rotator: {fileID: 4612393334438495643}
-  xSensitivity: 100
-  ySensitivity: 100
+  sensitivity: 0
   maxAngle: 90
 --- !u!114 &6686829323148334133
 MonoBehaviour:

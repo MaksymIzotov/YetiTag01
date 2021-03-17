@@ -109,35 +109,45 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit hit;
 
-        Debug.DrawRay(transform.position, transform.forward * 0.75f, Color.green);
+        Vector3 climbingPos = new Vector3(transform.position.x,transform.position.y -0.5f,transform.position.z);
+
+        Debug.DrawRay(climbingPos, transform.forward * 0.75f, Color.green);
 
         if (!canWall)
             canWall = cc.isGrounded;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.75f))
+        if (Physics.Raycast(climbingPos, transform.forward, out hit, 0.75f))
         {
             if (hit.transform.gameObject.layer == wallClimbingLayers)
             {
-                isWalling = Input.GetKey(KeyCode.W) && !cc.isGrounded && canWall;
-                Debug.Log(isWalling);
+                if (!isWalling)
+                {
+                    isWalling = Input.GetKey(KeyCode.W) && !cc.isGrounded && canWall;
+                    Debug.Log(isWalling);
+                    if (isWalling)
+                        if (moveDirection.y > 0)
+                            moveDirection.y = 5;
+                        else
+                            moveDirection.y = 3.5f;
+                }
             }
             else
             {
-                UpdateWallParams(false);
-                isWalling = false;
+                if (isWalling)
+                    UpdateWallParams(false);
             }
         }
         else
         {
-            UpdateWallParams(false);
-            isWalling = false;
+            if (isWalling)
+                UpdateWallParams(false);
         }
 
         if (isWalling)
             WallClimbing();
-        if (!isWalling)
-            if (!isZippin)
-                Move(IsWalking);
+
+        if (!isZippin)
+            Move(IsWalking);
 
         if (impact.magnitude > 0.2)
             cc.Move(impact * Time.deltaTime);
@@ -163,7 +173,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isZippin)
             {
-                
+
                 if (pc != null)
                 {
                     distance = pc.path.GetClosestDistanceAlongPath(transform.position);
@@ -237,14 +247,15 @@ public class PlayerController : MonoBehaviour
         moveDirection *= canMove ? (IsWalking ? walkingSpeed : runningSpeed) : 0;
 
 
-        if (Input.GetButton("Jump") && canMove && cc.isGrounded)
+        if (Input.GetButton("Jump") && canMove && cc.isGrounded && !isWalling)
             moveDirection.y = jumpSpeed;
         else
             moveDirection.y = movementDirectionY;
 
 
         if (!cc.isGrounded)
-            moveDirection.y -= gravity * Time.deltaTime;
+            if (!isWalling)
+                moveDirection.y -= gravity * Time.deltaTime;
 
         // Move the controller
         cc.Move((moveDirection) * Time.deltaTime);
@@ -273,12 +284,9 @@ public class PlayerController : MonoBehaviour
 
     void WallClimbing()
     {
-        if (normalizedTime <= wallCimbingDuration)
-        {
-            //Do climbing
-            cc.Move(new Vector3(0, 0.08f, 0 * Time.deltaTime));
-            normalizedTime += Time.deltaTime;
-            Debug.Log(normalizedTime);
+        if (moveDirection.y >= 2)
+        {    
+            moveDirection.y -= 2.5f * Time.deltaTime;
         }
         else
         {
@@ -288,9 +296,11 @@ public class PlayerController : MonoBehaviour
 
     void UpdateWallParams(bool check)
     {
+        if (isWalling)
+            moveDirection = transform.up * 2;
+
         canWall = check;
         isWalling = false;
-        normalizedTime = 0;
     }
 
     void ZipLineMove()

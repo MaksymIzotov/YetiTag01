@@ -81,7 +81,10 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.RawImage
     - UnityEngine.UI.RectMask2D
+    - UnityEngine.UI.Slider
+    - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/1 Scenes/GameScene.unity:
@@ -126,17 +129,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10050}
     - Class: 114
+      Script: {instanceID: 10056}
+    - Class: 114
       Script: {instanceID: 10116}
     - Class: 114
       Script: {instanceID: 10208}
     - Class: 114
       Script: {instanceID: 10370}
     - Class: 114
+      Script: {instanceID: 10466}
+    - Class: 114
       Script: {instanceID: 10758}
     - Class: 114
       Script: {instanceID: 11226}
     - Class: 114
       Script: {instanceID: 11410}
+    - Class: 114
+      Script: {instanceID: 11444}
     - Class: 114
       Script: {instanceID: 11580}
     - Class: 114
@@ -153,6 +162,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 12698}
     - Class: 114
       Script: {instanceID: 12802}
+    - Class: 114
+      Script: {instanceID: 12862}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -519,7 +530,7 @@ ScriptsOnlyBuild:
     className: TakeOwnership
   - hash:
       serializedVersion: 2
-      Hash: df76f618ce4d3bc240376795caf63e39
+      Hash: 754cc7355b2c8e457881e67e0709fc5c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerSpawner
@@ -831,7 +842,7 @@ ScriptsOnlyBuild:
     className: ConnectAndJoinRandom
   - hash:
       serializedVersion: 2
-      Hash: 4be898f33f51017d402c1aacb7df4317
+      Hash: 4087f7a56941fa40f105d1d5564c8e43
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Look
