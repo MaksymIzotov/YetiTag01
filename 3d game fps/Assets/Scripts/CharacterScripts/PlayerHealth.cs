@@ -39,8 +39,8 @@ public class PlayerHealth : MonoBehaviour
     {
         //TODO: Respawn as a Yeti
         gameObject.GetComponent<PlayerController>().isFrozen = false;
-        gameObject.GetComponent<PlayerController>().LoadYetiSettings();
         gameObject.layer = 10;
+        gameObject.GetComponent<PlayerController>().LoadYetiSettings();
         GameObject.Find("Spawner").GetComponent<PlayerSpawner>().role = 10;
         GameObject.Find("Spawner").GetComponent<PlayerSpawner>().UpdateRoleText();
     }
