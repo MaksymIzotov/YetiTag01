@@ -238,10 +238,13 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 YetiNum++;
         }
 
-        // if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
-        // {
-        //     StopGame();
-        // }
+        if(PhotonNetwork.PlayerList.Count() != 1)
+        {
+            if (gameTime <= 0 || yetiAmount >= PhotonNetwork.PlayerList.Count())
+            {
+                StopGame();
+            }
+        }
         YetiNum = 0;
     }
 
