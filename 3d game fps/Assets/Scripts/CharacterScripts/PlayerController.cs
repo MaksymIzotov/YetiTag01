@@ -290,16 +290,16 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            UpdateWallParams(false);
+            UpdateWallParams(true);
         }
     }
 
     void UpdateWallParams(bool check)
     {
-        if (isWalling)
-            moveDirection = transform.up * 2;
+        if(check)
+            moveDirection = transform.up * 5;
 
-        canWall = check;
+        canWall = false;
         isWalling = false;
     }
 

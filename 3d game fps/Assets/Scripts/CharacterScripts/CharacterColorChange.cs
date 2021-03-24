@@ -60,6 +60,11 @@ public class CharacterColorChange : MonoBehaviour, IPunObservable
                 gameObject.layer = layer;
                 gameObject.GetComponent<Renderer>().material.color = Color.blue;
             }
+            if(layer == 9)
+            {
+                gameObject.layer = layer;
+                gameObject.GetComponent<Renderer>().material.color = Color.white;
+            }
         }
     }
 }

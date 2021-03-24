@@ -94,6 +94,10 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     {
         sensText.GetComponent<TextMeshProUGUI>().text = "Sensitivity: " + sensSlider.value;
         PlayerPrefs.SetFloat("Sens",sensSlider.value);
+        if(player != null)
+        {
+            player.GetComponent<Look>().sensitivity = sensSlider.value;
+        }
     }
 
     [PunRPC]
